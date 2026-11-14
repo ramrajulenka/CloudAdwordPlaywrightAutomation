@@ -1,0 +1,21 @@
+{
+  "name": "cloudadword-playwright-automation",
+  "version": "1.0.0",
+  "description": "CloudAdword Studio Web Automation Framework using Playwright and TypeScript",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:chrome": "playwright test --project=chromium",
+    "test:login": "playwright test tests/e2e/loginPageTestCases.spec.ts",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0",
+    "@types/node": "^26.6.6",
+    "dotenv": "18.0.10",
+    "typescript": "7.0.2"
+  }
+}

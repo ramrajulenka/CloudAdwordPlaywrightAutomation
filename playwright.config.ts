@@ -1,0 +1,42 @@
+
+import 'dotenv/config';
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+
+    // Test folder
+    testDir: './tests/e2e',
+
+    // Run tests in parallel
+    fullyParallel: true,
+
+    // CI configuration
+    forbidOnly: !!process.env.CI,
+    retries: process.env.CI ? 2 : 0,
+  ...(process.env.CI ? { workers: 1 } : {}),
+
+    // HTML report
+    reporter: 'html',
+
+    // Shared browser settings
+    use: {
+        baseURL: process.env.URL,
+        headless: false,
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+        trace: 'retain-on-failure',
+    },
+
+    // Browser configuration
+    projects: [
+        {
+            name: 'chromium',
+            use: { ...devices['Desktop Chrome'] },
+        }, 
+     /*   {
+            name: 'Firefox',
+            use: { ...devices['Desktop Firefox'] },
+        },*/
+    ],
+
+});
