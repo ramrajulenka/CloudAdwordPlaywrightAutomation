@@ -5,10 +5,19 @@ import { dashboardData } from "../test-data/deshboard-data";
 
 test.describe("Verify The Dashboard Functionality", () => {
   // Login before every test
-  test.beforeEach(async ({ loginPage }) => {
+  test.beforeEach(async ({ loginPage, dashboardPage }) => {
+
     await loginPage.launchWeb();
+
     await loginPage.loginWeb();
-  });
+
+    // Confirm dashboard is loaded
+    await dashboardPage.dashboardPageTitle.waitFor({
+        state: 'visible',
+        timeout: 15000
+    });
+
+});
 
   // Verify Dashboard Page Title
   test("Verify the Dashboard Page Title", async ({
@@ -116,8 +125,29 @@ test.describe("Verify The Dashboard Functionality", () => {
       "Create Campaign",
     );
   });
+  // Verify the Notification Button Functionality
+  test("Verify the Notification Button Functionality", async ({
+    dashboardPage,
+    assertions,
+    actions,
+  }) => {
+    await assertions.verifyElementVisible(dashboardPage.notificationIcon);
+    await actions.clickElement(dashboardPage.notificationIcon);
+    await assertions.verifyElementText(
+      dashboardPage.notificationPopupHeader,
+      "Notifications",
+    );
+  });
 
 
 
-  
+
+
+
+
+
+
+
+
+
 });

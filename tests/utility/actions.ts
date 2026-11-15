@@ -75,4 +75,9 @@ export class Actions {
             path: `screenshots/${name}.png`
         });
     }
+
+    //Wait
+    async wait(seconds: number) {
+        await this.page.waitForTimeout(seconds * 1000);
+    }
 }

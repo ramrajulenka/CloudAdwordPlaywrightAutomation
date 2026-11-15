@@ -39,15 +39,16 @@ export class DashboardPage {
   get totalPlayersIcon() {
     return this.page.locator(".icon-screen-desktop").first();
   }
- get totalScreensCount() {
-   return this.page.locator('h4.number').nth(1);
-}
+  get totalScreensCount() {
+    return this.page.locator("h4.number").nth(1);
+  }
 
- get onlineScreensCount() {
-    return this.page.locator('div.content')
-        .filter({ hasText: /^Online Players/ })
-        .locator('h4.number');
-}
+  get onlineScreensCount() {
+    return this.page
+      .locator("div.content")
+      .filter({ hasText: /^Online Players/ })
+      .locator("h4.number");
+  }
 
   get onlineScreenIcon() {
     return this.page.locator(".icon.bg-success > .icon-screen-desktop");
@@ -58,17 +59,24 @@ export class DashboardPage {
   }
 
   get addPlayerButton() {
-    return this.page.getByRole('button', { name: /Add Player/i });
-}
-get addPlayerPageText(){
-  return this.page.getByRole('heading', { name: 'Add Player' })
-}
-get addCampaignButton() {
-    return this.page.getByRole('button', { name: /Add Campaign/i });
-}
-get addCampaignPageText() {
-    return this.page.getByRole('heading', { name: 'Create Campaign' });
-}
+    return this.page.getByRole("button", { name: /Add Player/i });
+  }
+  get addPlayerPageText() {
+    return this.page.getByRole("heading", { name: "Add Player" });
+  }
+  get addCampaignButton() {
+    return this.page.getByRole("button", { name: /Add Campaign/i });
+  }
+  get addCampaignPageText() {
+    return this.page.getByRole("heading", { name: "Create Campaign" });
+  }
+
+  get notificationIcon() {
+    return this.page.locator("i.fa.fa-bell");
+  }
+  get notificationPopupHeader() {
+    return this.page.locator("strong").filter({ hasText: /^Notifications$/ });
+  }
   public async TotalLocationCount(): Promise<string> {
     const actualText = await this.totalLocationCount;
 
@@ -79,11 +87,11 @@ get addCampaignPageText() {
     return actualCount ?? "";
   }
 
-public async TotalScreensCount(): Promise<string> {
+  public async TotalScreensCount(): Promise<string> {
     return await this.totalScreensCount.innerText();
-}
+  }
 
-public async OnlineScreensCount(): Promise<string> {
+  public async OnlineScreensCount(): Promise<string> {
     return await this.onlineScreensCount.innerText();
-}
+  }
 }
