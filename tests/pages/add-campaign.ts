@@ -1,5 +1,6 @@
 import { Page } from "@playwright/test";
-import { get } from "node:http";
+import { Actions } from "../utility/actions";
+
 
 export class AddCampaignPage {
   readonly page: Page;
@@ -47,8 +48,9 @@ get chooseHorizentalSingleDiv() {
         return page.getByRole("link", { name: "Vertical Full Layout" });
       },
       get clickAddMedia() {
-        return page.getByText("Click To Add Media Here");
-      },
+    return page.locator('#tbllayout1')
+        .locator('span.btnAddMedia');
+},
      get selectMediaFolder(){
         return page.getByRole('link', { name: ' Horizental  0 ' });
      },
@@ -56,16 +58,54 @@ get chooseHorizentalSingleDiv() {
         return  page.getByTitle('List View');
 
      },
-     get selectMedia(){
-        return page.getByRole('cell', { name: 'Select All' }).getByLabel('');
-     },
-     get addToTimeline() {
-        return page.getByRole('button', { name: ' Add to timeline' });
-     },
-     get clickSave(){
-        return  page.getByRole('button', { name: 'Save' })
+     get selectMedia() {
+    return page
+        .getByRole('row')
+        .filter({ hasText: 'Select All' })
+        .getByRole('checkbox');
+},
+get selectVerticalContnet(){
+  return page.locator(':text-is("VerticalImage")')
 
-     }
+},
+
+get selectAllVertical(){
+return  page.locator(`//tr[td[contains(., 'Select All')]]//td[1]//input[@type='checkbox']`)
+
+},
+     get addToTimeline() {
+    return page.getByRole('button', { name: 'Add to timeline' });
+},
+
+get clickSave() {
+    return page.getByText('Save', { exact: true })
+}
     };
   }
+
+public async AddCampaign() {
+
+    await this.addCampaignBtn.click();
+    await this.campaignPage.enterCampaignName.fill(
+        'New_Kira_7867kjkjghghjhjh'
+    );
+    await this.campaignPage.countinueBtn.click();
+    await this.campaignPage.chooseVerticalLayout.click();
+    await this.campaignPage.chooseVerticalSingleDiv.click();
+    await this.campaignPage.clickAddMedia.waitFor({
+        state: 'visible'
+    });
+    await this.campaignPage.clickAddMedia.click();
+    await this.campaignPage.selectMediaFolder.click();
+    await this.campaignPage.selectListView.click();
+    await this.campaignPage.selectMedia.click();
+    await this.campaignPage.addToTimeline.click();
+    await this.campaignPage.countinueBtn.click();
+    // Wait for Save button
+    await this.campaignPage.clickSave.waitFor({
+        state: 'visible',
+        timeout: 10000
+    });
+    await this.campaignPage.clickSave.click();
+}
 }
