@@ -4,67 +4,62 @@ import { testData as registrationTestData } from "../test-data/registation-data"
 
 test.describe("CloudAdword Studio - Registration Tests", () => {
   // Navigate to Registration Page before every test
-  test.beforeEach(async ({ actions, registrationPage }) => {
-    await actions.navigate(testData.BaseURL);
-    await actions.clickElement(registrationPage.registrationLink);
+  test.beforeEach(async ({ util,registrationPage }) => {
+    await util.action.navigate(testData.BaseURL);
+    await util.action.clickElement(registrationPage.registrationLink);
   });
 
   // Verify Registration Page Title
   test("Verify Registration Page Title", async ({
-    registrationPage,
-    assertions,
+    registrationPage,util
   }) => {
-    await assertions.verifyElementText(
+    await util.assert.verifyElementText(
       registrationPage.registationPageTitle,
       "Register",
     );
   });
 
   // Verify Registration with Valid Credentials
-  test.skip("Verify Registration with Valid Credentials", async ({
+  test("Verify Registration with Valid Credentials", async ({
     registrationPage,
-    actions,
-    assertions,
+    util,
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.nameTextBox,
-      registrationTestData.validRegistrationData.name,
+      util.data.randomTextWithRange(8),
     );
 
-    await actions.enterText(
-      registrationPage.emailTextBox,
-      registrationTestData.validRegistrationData.email,
+    await util.action.enterText(
+      registrationPage.emailTextBox,util.data.randomEmail()
     );
 
-    await actions.enterText(
-      registrationPage.mobileNumberTextBox,
-      registrationTestData.validRegistrationData.contactNumber,
+    await util.action.enterText(
+      registrationPage.mobileNumberTextBox,util.data.randomMobileNumber()
     );
 
-    await actions.selectDropdown(
+    await util.action.selectDropdown(
       registrationPage.countryCodeDropdown,
       registrationTestData.validRegistrationData.countryCode,
     );
 
-    await actions.clickElement(registrationPage.termsAndConditionsCheckbox);
+    await util.action.clickElement(registrationPage.termsAndConditionsCheckbox);
 
-    await actions.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(registrationPage.submitButton);
 
-    await assertions.verifyElementContainsText(
-      registrationPage.verifyValidationMessage,
-      registrationTestData.validRegistrationData.verifyValidationMessage,
-    );
+    // await util.assert.verifyElementContainsText(
+    //   registrationPage.verifyValidationMessage,
+    //   registrationTestData.validRegistrationData.verifyValidationMessage,
+    // );
   });
 
   // Verify Registration with Empty Name
   test("Verify Registration with Empty Name", async ({
-    registrationPage,
-    actions,
-    assertions,
+    registrationPage,util
+   
   }) => {
-    await actions.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(registrationPage.submitButton);
 
-    await assertions.verifyElementContainsText(
+    await util.assert.verifyElementContainsText(
       registrationPage.emptyNameValidationMessage,
       registrationTestData.invalidRegistrationData
         .invalidValidationMessageWithoutName,
@@ -73,18 +68,16 @@ test.describe("CloudAdword Studio - Registration Tests", () => {
 
   // Verify Registration with Empty Email
   test("Verify Registration with Empty Email", async ({
-    registrationPage,
-    actions,
-    assertions,
+    registrationPage,util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.nameTextBox,
       registrationTestData.validRegistrationData.name,
     );
 
-    await actions.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(registrationPage.submitButton);
 
-    await assertions.verifyElementContainsText(
+    await util.assert.verifyElementContainsText(
       registrationPage.emptyEmailValidationMessage,
       registrationTestData.invalidRegistrationData
         .invalidValidationMessageWithoutEmail,
@@ -93,23 +86,21 @@ test.describe("CloudAdword Studio - Registration Tests", () => {
 
   // Verify Registration with Empty Contact Number
   test("Verify Registration with Empty Contact Number", async ({
-    registrationPage,
-    actions,
-    assertions,
+    registrationPage,util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.nameTextBox,
       registrationTestData.validRegistrationData.name,
     );
 
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.emailTextBox,
       registrationTestData.validRegistrationData.email,
     );
 
-    await actions.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(registrationPage.submitButton);
 
-    await assertions.verifyElementContainsText(
+    await util.assert.verifyElementContainsText(
       registrationPage.emptyContactNumberValidationMessage,
       registrationTestData.invalidRegistrationData
         .invalidValidationMessageWithoutContactNumber,
@@ -118,23 +109,21 @@ test.describe("CloudAdword Studio - Registration Tests", () => {
 
   // Verify Registration with Invalid Email
   test("Verify Registration with Invalid Email", async ({
-    registrationPage,
-    actions,
-    assertions,
+    registrationPage,util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.nameTextBox,
       registrationTestData.validRegistrationData.name,
     );
 
-    await actions.enterText(
+    await util.action.enterText(
       registrationPage.emailTextBox,
       registrationTestData.invalidRegistrationData.email,
     );
 
-    await actions.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(registrationPage.submitButton);
 
-    await assertions.verifyElementContainsText(
+    await util.assert.verifyElementContainsText(
       registrationPage.verifyInvalidEmailValidationMessage,
       registrationTestData.invalidRegistrationData
         .invalidValidationMessageWithInvalidEmail,

@@ -1,19 +1,23 @@
 import { test as base, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
+import { LoginPage } from "../pages/login-page";
 import { Actions } from "../utility/actions";
-import { RegistationPage } from "../pages/registationPage";
+import { RegistationPage } from "../pages/registation-page";
 import { Assertions } from "../utility/assertions";
-import { DashboardPage } from "../pages/dashboardPage";
+import { Dashboard} from "../pages/dashboard";
 import { AddCampaignPage } from "../pages/add-campaign";
+import {Data} from "../utility/data";
+import {Utilities} from "../utility/utilities"
 
 // Define custom fixtures
 interface MyFixtures {
   loginPage: LoginPage;
-  actions: Actions;
+  action: Actions;
   registrationPage: RegistationPage;
-  assertions: Assertions;
-  dashboardPage: DashboardPage;
-  addCampaignPage: AddCampaignPage;
+  assert: Assertions;
+  dashboard: Dashboard;
+  addCampaign: AddCampaignPage;
+  data:Data;
+  util:Utilities;
 }
 
 // Extend Playwright test
@@ -24,7 +28,7 @@ export const test = base.extend<MyFixtures>({
   },
 
   // Extend Actions fixture
-  actions: async ({ page }, use) => {
+  action: async ({ page }, use) => {
     const actions = new Actions(page);
     await use(actions);
   },
@@ -36,21 +40,28 @@ export const test = base.extend<MyFixtures>({
   },
 
   //Assertions fixture
-  assertions: async ({ page }, use) => {
+  assert: async ({ page }, use) => {
     const assertions = new Assertions(page);
     await use(assertions);
   },
 
   //DashboardPage fixture
-  dashboardPage: async ({ page }, use) => {
-    const dashboardPage = new DashboardPage(page);
-    await use(dashboardPage);
+  dashboard: async ({ page }, use) => {
+    const dashboard = new Dashboard(page);
+    await use(dashboard);
   },
   //Add-CampaignPage fixture
-  addCampaignPage: async ({ page }, use) => {
+  addCampaign: async ({ page }, use) => {
     const addCampaignPage = new AddCampaignPage(page);
     await use(addCampaignPage);
   },
+
+  //Add Utility-Data
+  util: async({page}, use) => {
+    const util = new Utilities(page);
+    await use(util);
+  }
+
 });
 
 export { expect };

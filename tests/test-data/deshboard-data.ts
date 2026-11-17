@@ -1,5 +1,5 @@
 export const dashboardData = {
-    dashboardPageTitle: "Dashboard",
+    title: "Dashboard",
     CloudID: "56036D19",
     clientName: "Kira",
     locationText:"Locations",

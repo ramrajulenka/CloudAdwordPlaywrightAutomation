@@ -1,15 +1,13 @@
 import { Page, Locator } from "@playwright/test";
-import { dashboardData } from "../test-data/deshboard-data";
-import { Assertions } from "../utility/assertions";
-import { assert } from "node:console";
+import { get } from "node:http";
 
-export class DashboardPage {
+export class Dashboard {
   readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
   }
-  get dashboardPageTitle() {
+  get dashboardTitle() {
     return this.page.locator("#main-content").getByText("Dashboard");
   }
   getCloudIDText(string: string) {
@@ -18,7 +16,9 @@ export class DashboardPage {
   getDashboardClientName(string: string) {
     return this.page.locator(`//h2[normalize-space()='Hi, ${string}.']`);
   }
-
+  get map() {
+    return this.page.getByRole("region", { name: "Map" });
+  }
   get locationsText() {
     return this.page.getByText("Locations");
   }
@@ -92,11 +92,11 @@ export class DashboardPage {
       },
 
       get nextMonthButton() {
-        return page.getByLabel('Next month');
+        return page.getByLabel("Next month");
       },
 
       get previousMonthButton() {
-        return page.getByLabel('Previous month');
+        return page.getByLabel("Previous month");
       },
 
       get calendarDateTimeIcon() {
@@ -106,9 +106,8 @@ export class DashboardPage {
       get minusHourButton() {
         return page.getByRole("button", { name: "Minus a hour" });
       },
-      get addHourButton(){
-return page.getByRole('button', { name: 'Add a hour' })
-
+      get addHourButton() {
+        return page.getByRole("button", { name: "Add a hour" });
       },
 
       get minusMinuteButton() {
@@ -116,7 +115,7 @@ return page.getByRole('button', { name: 'Add a hour' })
       },
 
       get addMinuteButton() {
-        return page.getByRole('button', { name: 'Add a minute' });
+        return page.getByRole("button", { name: "Add a minute" });
       },
 
       get setButton() {
@@ -126,11 +125,29 @@ return page.getByRole('button', { name: 'Add a hour' })
       get cancelButton() {
         return page.getByRole("button", { name: "Cancel" });
       },
- get clearButton(){
-return page.getByTitle('Clear');
- } ,
+      get clearButton() {
+        return page.getByTitle("Clear");
+      },
+    };
+  }
+  get scheduleCalendar() {
+    const page = this.page;
+
+    return {
+      get previousMonthButton() {
+        return page.getByRole("button", { name: "Previous month" });
+      },
+
+      get nextMonthButton() {
+        return page.getByRole("button", { name: "Next month" });
+      },
+
       get todayButton() {
-        return page.getByRole("button", { name: "today" });
+        return page.getByRole("button", { name: "Today" });
+      },
+
+      getVerifyMonthText(month: string) {
+        return page.getByRole("heading", { name: month });
       },
     };
   }

@@ -1,300 +1,369 @@
-import { Page } from "@playwright/test";
+
+import { assert } from "node:console";
 import { test } from "../fixtures/test-fixtures";
-import { DashboardPage } from "../pages/dashboardPage";
 import { dashboardData } from "../test-data/deshboard-data";
 
 test.describe("Verify The Dashboard Functionality", () => {
-  // Login before every test
-  test.beforeEach(async ({ loginPage, dashboardPage }) => {
-    await loginPage.launchWeb();
 
+  // =====================================================
+  // Login Before Every Test
+  // =====================================================
+  test.beforeEach(async ({ loginPage, dashboard }) => {
+    await loginPage.launchWeb();
     await loginPage.loginWeb();
 
-    // Confirm dashboard is loaded
-    await dashboardPage.dashboardPageTitle.waitFor({
+    // Verify Dashboard Is Loaded
+    await dashboard.dashboardTitle.waitFor({
       state: "visible",
       timeout: 15000,
     });
   });
 
+  // =====================================================
+  // Dashboard Basic Information
+  // =====================================================
+
   // Verify Dashboard Page Title
-  test("Verify the Dashboard Page Title", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyElementText(
-      dashboardPage.dashboardPageTitle,
-      dashboardData.dashboardPageTitle,
+  test("Verify the Dashboard Page Title", async ({ dashboard, util }) => {
+    await util.assert.verifyElementText(
+      dashboard.dashboardTitle,
+      dashboardData.title
     );
   });
 
-  // Verify Cloud ID on Dashboard
-  test("Verify The Cloud ID On The Dashboard", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyElementText(
-      dashboardPage.getCloudIDText(dashboardData.CloudID),
-      `Cloud ID : ${dashboardData.CloudID}`,
+  // Verify Cloud ID
+  test("Verify The Cloud ID On The Dashboard", async ({ dashboard, util }) => {
+    await util.assert.verifyElementText(
+      dashboard.getCloudIDText(dashboardData.CloudID),
+      `Cloud ID : ${dashboardData.CloudID}`
     );
   });
 
-  // Verify Client Name on Dashboard
-  test("Verify the Client Name on the Dashboard Page", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyElementText(
-      dashboardPage.getDashboardClientName(dashboardData.clientName),
-      `Hi, ${dashboardData.clientName}.`,
+  // Verify Client Name
+  test("Verify the Client Name on the Dashboard Page", async ({ dashboard, util }) => {
+    await util.assert.verifyElementText(
+      dashboard.getDashboardClientName(dashboardData.clientName),
+      `Hi, ${dashboardData.clientName}.`
     );
   });
 
-  //verify the Location Text
-  test("Verify the Location Textfiedl", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyElementText(
-      dashboardPage.locationsText,
-      dashboardData.locationText,
-    );
-  });
-  //Verify the Location Icon
-  test("Verify the Location Icon", async ({ dashboardPage, actions }) => {
-    await actions.isVisible(dashboardPage.locationIcon);
-  });
+  // =====================================================
+  // Location Section
+  // =====================================================
 
-  //Verify the Location Count
-  test("Verify the Location Count", async ({ dashboardPage, assertions }) => {
-    await assertions.verifyTextCount(
-      await dashboardPage.TotalLocationCount(),
-      16,
+  // Verify Location Text
+  test("Verify the Location Text", async ({ dashboard, util }) => {
+    await util.assert.verifyElementText(
+      dashboard.locationsText,
+      dashboardData.locationText
     );
   });
 
-  //Verify the total players
-  test("Verify The Total Screens Count", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyTextCount(
-      await dashboardPage.TotalScreensCount(),
-      11,
+  // Verify Location Icon
+  test("Verify the Location Icon", async ({ dashboard, util }) => {
+    await util.action.isVisible(dashboard.locationIcon);
+  });
+
+  // Verify Location Count
+  test("Verify the Location Count", async ({ dashboard, util }) => {
+    await util.assert.verifyTextCount(
+      await dashboard.TotalLocationCount(),
+      16
+    );
+  });
+//Verify The Map
+test("Verify The Dashboard Map",async({dashboard,util})=>{
+  await util.assert.verifyElementVisible(dashboard.map);
+
+
+});
+  // =====================================================
+  // Players / Screens Section
+  // =====================================================
+
+  // Verify Total Screens Count
+  test("Verify The Total Screens Count", async ({ dashboard, util }) => {
+    await util.assert.verifyTextCount(
+      await dashboard.TotalScreensCount(),
+      11
     );
   });
 
-  //Verify the Online Screens
-  test("Verify The Online Screen Count", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    const onlineCount = await dashboardPage.OnlineScreensCount();
+  // Verify Online Screens Count
+  test("Verify The Online Screen Count", async ({ dashboard, util }) => {
+    const onlineCount = await dashboard.OnlineScreensCount();
 
     console.log("Online Screens Count:", onlineCount);
 
-    await assertions.verifyTextCount(onlineCount, 0);
+    await util.assert.verifyTextCount(onlineCount, 0);
   });
 
-  //Verify The Add Screen Vutton
-  test("Verify The Add Screen Button", async ({
-    dashboardPage,
-    assertions,
-    actions,
-  }) => {
-    await assertions.verifyElementVisible(dashboardPage.addPlayerButton);
-    await actions.clickElement(dashboardPage.addPlayerButton);
-    await assertions.verifyElementText(
-      dashboardPage.addPlayerPageText,
-      "Add Player",
+  // =====================================================
+  // Add Player / Add Campaign
+  // =====================================================
+
+  // Verify Add Screen Button
+  test("Verify The Add Screen Button", async ({ dashboard, util }) => {
+    await util.assert.verifyElementVisible(dashboard.addPlayerButton);
+    await util.action.clickElement(dashboard.addPlayerButton);
+
+    await util.assert.verifyElementText(
+      dashboard.addPlayerPageText,
+      "Add Player"
     );
   });
 
-  // Verify The Add Campaign Page Text
-  test("Verify The Add Campaign Page Text", async ({
-    dashboardPage,
-    assertions,
-    actions,
-  }) => {
-    await assertions.verifyElementVisible(dashboardPage.addCampaignButton);
-    await actions.clickElement(dashboardPage.addCampaignButton);
-    await assertions.verifyElementText(
-      dashboardPage.addCampaignPageText,
-      "Create Campaign",
+  // Verify Add Campaign Page Text
+  test("Verify The Add Campaign Page Text", async ({ dashboard, util }) => {
+    await util.assert.verifyElementVisible(dashboard.addCampaignButton);
+    await util.action.clickElement(dashboard.addCampaignButton);
+
+    await util.assert.verifyElementText(
+      dashboard.addCampaignPageText,
+      "Create Campaign"
     );
   });
-  // Verify the Notification Button Functionality
-  test("Verify the Notification Button Functionality", async ({
-    dashboardPage,
-    assertions,
-    actions,
-  }) => {
-    await assertions.verifyElementVisible(dashboardPage.notificationIcon);
-    await actions.clickElement(dashboardPage.notificationIcon);
-    await assertions.verifyElementText(
-      dashboardPage.notificationPopupHeader,
-      "Notifications",
+
+  // =====================================================
+  // Notification Section
+  // =====================================================
+
+  // Verify Notification Button Functionality
+  test("Verify the Notification Button Functionality", async ({ dashboard, util }) => {
+    await util.assert.verifyElementVisible(dashboard.notificationIcon);
+    await util.action.clickElement(dashboard.notificationIcon);
+
+    await util.assert.verifyElementText(
+      dashboard.notificationPopupHeader,
+      "Notifications"
     );
   });
-  //Verify Calendar Icon Visibility
-  test("Verify Calendar Icon Visibility", async ({
-    dashboardPage,
-    assertions,
-  }) => {
-    await assertions.verifyElementVisible(dashboardPage.calander.calendarIcon);
-  });
-  //Verify Calendar Opens
-  test(" Verify Calendar Opens", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
 
-    await assertions.verifyElementVisible(dashboardPage.calander.todayButton);
-  });
-  //Verify Calendar Overlay
-  test("Verify Calendar Overlay", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
+  // =====================================================
+  // Calendar Section
+  // =====================================================
 
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.calendarOverlay,
+  // Verify Calendar Icon Visibility
+  test("Verify Calendar Icon Visibility", async ({ dashboard, util }) => {
+    await util.assert.verifyElementVisible(
+      dashboard.calander.calendarIcon
     );
   });
-  //Verify Next Month Button
-  test("Verify Next Month Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
 
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.nextMonthButton,
-    );
-
-    await actions.clickElement(dashboardPage.calander.nextMonthButton);
-  });
-  //Verify Previous Month Button
-  test("Verify Previous Month Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.previousMonthButton,
-    );
-
-    await actions.clickElement(dashboardPage.calander.previousMonthButton);
-  });
-  //Verify Today Button
-  test.skip("Verify Today Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.nextMonthButton);
-
-    await assertions.verifyElementVisible(dashboardPage.calander.todayButton);
-
-    await actions.clickElement(dashboardPage.calander.todayButton);
-  });
-  //Verify Calendar Date Time Icon
-  test("Verify Calendar Date Time Icon", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.calendarDateTimeIcon,
+  // Verify Calendar Opens
+  test("Verify Calendar Opens", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
     );
   });
-  //Verify Minus Hour Button
-  test("Verify Minus Hour Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
 
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.minusHourButton,
+  // Verify Calendar Overlay
+  test("Verify Calendar Overlay", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
     );
 
-    await actions.clickElement(dashboardPage.calander.minusHourButton);
+    await util.assert.verifyElementVisible(
+      dashboard.calander.calendarOverlay
+    );
   });
-  //Verify Minus Minute Button
-  test("Verify Minus Minute Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
 
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.minusMinuteButton,
+  // Verify Next Month Button
+  test("Verify Next Month Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
     );
 
-    await actions.clickElement(dashboardPage.calander.minusMinuteButton);
-  });
-  //Verify the add Hour Button
-  test("Verify The Add Hour Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-    await assertions.verifyElementVisible(dashboardPage.calander.addHourButton);
-    await actions.clickElement(dashboardPage.calander.addHourButton);
-  });
-  //Verify Add Minute Button
-  test("Verify Add Minute Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-
-    await assertions.verifyElementVisible(
-      dashboardPage.calander.addMinuteButton,
+    await util.assert.verifyElementVisible(
+      dashboard.calander.nextMonthButton
     );
 
-    await actions.clickElement(dashboardPage.calander.addMinuteButton);
+    await util.action.clickElement(
+      dashboard.calander.nextMonthButton
+    );
   });
-  test("Verify Set Button", async ({ dashboardPage, actions, assertions }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
 
-    await assertions.verifyElementVisible(dashboardPage.calander.setButton);
+  // Verify Previous Month Button
+  test("Verify Previous Month Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
 
-    await actions.clickElement(dashboardPage.calander.setButton);
+    await util.assert.verifyElementVisible(
+      dashboard.calander.previousMonthButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.previousMonthButton
+    );
   });
-  //Verify Cancel Button
-  test("Verify Cancel Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-    await assertions.verifyElementVisible(dashboardPage.calander.cancelButton);
-    await actions.clickElement(dashboardPage.calander.cancelButton);
+
+  // Verify Calendar Date Time Icon
+  test("Verify Calendar Date Time Icon", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.calendarDateTimeIcon
+    );
   });
-  //Verify The Date And Time Clear Button
-  test("Verify The Date And Time Clear Button", async ({
-    dashboardPage,
-    actions,
-    assertions,
-  }) => {
-    await actions.clickElement(dashboardPage.calander.calendarIcon);
-    await actions.clickElement(dashboardPage.calander.setButton);
-    await assertions.verifyElementVisible(dashboardPage.calander.clearButton);
-    await actions.clickElement(dashboardPage.calander.clearButton);
+
+  // Verify Minus Hour Button
+  test("Verify Minus Hour Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.minusHourButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.minusHourButton
+    );
   });
+
+  // Verify Minus Minute Button
+  test("Verify Minus Minute Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.minusMinuteButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.minusMinuteButton
+    );
+  });
+
+  // Verify Add Hour Button
+  test("Verify The Add Hour Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.addHourButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.addHourButton
+    );
+  });
+
+  // Verify Add Minute Button
+  test("Verify Add Minute Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.addMinuteButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.addMinuteButton
+    );
+  });
+
+  // Verify Set Button
+  test("Verify Set Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.setButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.setButton
+    );
+  });
+
+  // Verify Cancel Button
+  test("Verify Cancel Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.cancelButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.cancelButton
+    );
+  });
+
+  // Verify Date And Time Clear Button
+  test("Verify The Date And Time Clear Button", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.calander.calendarIcon
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.setButton
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.calander.clearButton
+    );
+
+    await util.action.clickElement(
+      dashboard.calander.clearButton
+    );
+  });
+
+  // =====================================================
+  // Schedule Calendar Section
+  // =====================================================
+
+  // Verify Today Button
+  test("Verify Today Button Schedule Calendar", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.scheduleCalendar.nextMonthButton
+    );
+
+    await util.assert.verifyElementVisible(
+      dashboard.scheduleCalendar.todayButton
+    );
+
+    await util.action.clickElement(
+      dashboard.scheduleCalendar.todayButton
+    );
+
+    await util.assert.verifyElementText(
+      dashboard.scheduleCalendar.getVerifyMonthText("November"),
+      "November 2026"
+    );
+  });
+
+  // Verify Next Month Button
+  test("Verify Next Month Button In Schedule Calendar", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.scheduleCalendar.nextMonthButton
+    );
+
+    await util.assert.verifyElementText(
+      dashboard.scheduleCalendar.getVerifyMonthText("December"),
+      "December 2026"
+    );
+  });
+
+  // Verify Previous Month Button
+  test("Verify Previous Month Button In Schedule Calendar", async ({ dashboard, util }) => {
+    await util.action.clickElement(
+      dashboard.scheduleCalendar.previousMonthButton
+    );
+
+    await util.assert.verifyElementText(
+      dashboard.scheduleCalendar.getVerifyMonthText("October"),
+      "October 2026"
+    );
+  });
+
 });

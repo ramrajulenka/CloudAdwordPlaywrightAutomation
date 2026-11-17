@@ -3,8 +3,8 @@ import { testData } from "../test-data/login-data";
 
 test.describe("CloudAdword Studio - Login Tests", () => {
   // Navigate to login page before every test
-  test.beforeEach(async ({ actions }) => {
-    await actions.navigate(testData.BaseURL);
+  test.beforeEach(async ({util}) => {
+    await util.action.navigate(testData.BaseURL);
   });
 
   // Verify Login Page Title
@@ -14,24 +14,24 @@ test.describe("CloudAdword Studio - Login Tests", () => {
 
   // Verify Login with Valid Credentials
   test("Verify Login with Valid Credentials", async ({
-    loginPage,
-    actions,
+    loginPage,util
+
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.emailInput,
       testData.testAccountOne.username,
     );
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.passwordInput,
       testData.testAccountOne.password,
     );
 
-    await actions.clickElement(loginPage.loginButton);
+    await util.action.clickElement(loginPage.loginButton);
 
-    await actions.enterText(loginPage.otpInput, testData.testAccountOne.otp);
-    await actions.clickElement(loginPage.submitButton);
+    await util.action.enterText(loginPage.otpInput, testData.testAccountOne.otp);
+    await util.action.clickElement(loginPage.submitButton);
 
-    await actions.clickElement(loginPage.closeButton);
+    await util.action.clickElement(loginPage.closeButton);
 
     await expect(loginPage.dashboardPageTitle).toHaveText("Dashboard");
   });
@@ -39,18 +39,18 @@ test.describe("CloudAdword Studio - Login Tests", () => {
   // Verify Login with Invalid Credentials
   test("Verify Login with Invalid Credentials", async ({
     loginPage,
-    actions,
+    util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.emailInput,
       testData.testAccountTwo.username,
     );
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.passwordInput,
       testData.testAccountTwo.password,
     );
 
-    await actions.clickElement(loginPage.loginButton);
+    await util.action.clickElement(loginPage.loginButton);
 
     await expect(loginPage.verifyInvalidCredentialsErrorMessage).toContainText(
       "Error",
@@ -60,9 +60,9 @@ test.describe("CloudAdword Studio - Login Tests", () => {
   //Verify Login with Empty Credentials
   test("Verify Login with Empty Credentials", async ({
     loginPage,
-    actions,
+    util
   }) => {
-    await actions.clickElement(loginPage.loginButton);
+    await util.action.clickElement(loginPage.loginButton);
 
     await expect(loginPage.verifyInvalidCredentialsErrorMessage).toContainText(
       "Please enter emailaddress",
@@ -72,14 +72,14 @@ test.describe("CloudAdword Studio - Login Tests", () => {
   // Verify Login with Empty Email and Valid Password
   test("Verify Login with Empty Email and Valid Password", async ({
     loginPage,
-    actions,
+    util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.passwordInput,
       testData.testAccountOne.password,
     );
 
-    await actions.clickElement(loginPage.loginButton);
+    await util.action.clickElement(loginPage.loginButton);
 
     await expect(loginPage.verifyInvalidCredentialsErrorMessage).toContainText(
       "Please enter emailaddress",
@@ -89,14 +89,14 @@ test.describe("CloudAdword Studio - Login Tests", () => {
   //Verify Login with Valid Email and Empty Password
   test("Verify Login with Valid Email and Empty Password", async ({
     loginPage,
-    actions,
+    util
   }) => {
-    await actions.enterText(
+    await util.action.enterText(
       loginPage.emailInput,
       testData.testAccountOne.username,
     );
 
-    await actions.clickElement(loginPage.loginButton);
+    await util.action.clickElement(loginPage.loginButton);
 
     await expect(loginPage.verifyInvalidCredentialsErrorMessage).toContainText(
       "Please enter password",

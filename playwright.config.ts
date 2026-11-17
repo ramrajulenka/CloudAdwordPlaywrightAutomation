@@ -26,6 +26,8 @@ export default defineConfig({
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
         trace: 'retain-on-failure',
+        launchOptions: {args: ['--start-maximized'],},
+        viewport: null,
     },
 
     // Browser configuration
@@ -37,7 +39,12 @@ export default defineConfig({
      /*   {
             name: 'Firefox',
             use: { ...devices['Desktop Firefox'] },
-        },*/
+        },
+        {
+           name: 'Microsoft Edge',
+           use: { ...devices['Desktop Edge'] },
+        },
+        */
     ],
 
 });
