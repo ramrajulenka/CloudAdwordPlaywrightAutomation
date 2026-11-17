@@ -7,7 +7,7 @@ await page.keyboard.press('F11');
 await loginPage.loginWeb();
 await actions.clickElement(addCampaignPage.addCampaignBtn);
 await assertions.verifyElementText(addCampaignPage.campaignPage.text,'Create Campaign');
-await actions.enterText(addCampaignPage.campaignPage.enterCampaignName,'verticalh');
+await actions.enterText(addCampaignPage.campaignPage.enterCampaignName,'verticalhk');
 await actions.clickElement(addCampaignPage.campaignPage.countinueBtn);
 await actions.clickElement(addCampaignPage.campaignPage.chooseVerticalLayout);
 await actions.clickElement(addCampaignPage.campaignPage.chooseVerticalSingleDiv);
@@ -15,6 +15,7 @@ await actions.clickElement(addCampaignPage.campaignPage.clickAddMedia);
 await actions.clickElement(addCampaignPage.campaignPage.selectVerticalContnet);
 await actions.clickElement(addCampaignPage.campaignPage.selectListView);
 await actions.clickElement(addCampaignPage.campaignPage.selectAllVertical);
+await actions.waitForElement(addCampaignPage.campaignPage.addToTimeline)
 await actions.clickElement(addCampaignPage.campaignPage.addToTimeline);
 await actions.clickElement(addCampaignPage.campaignPage.countinueBtn);
 await actions.clickElement(addCampaignPage.campaignPage.clickSave);

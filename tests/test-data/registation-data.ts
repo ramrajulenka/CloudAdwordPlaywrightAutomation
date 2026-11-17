@@ -1,8 +1,8 @@
 export const testData = {
     validRegistrationData: {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        contactNumber: "1234567890",
+        name: "John",
+        email: "johndoe@example.com",
+        contactNumber: "123456780",
         verifyValidationMessage: "Registration successful",
         countryCode: "+91"
     },

@@ -77,6 +77,63 @@ export class DashboardPage {
   get notificationPopupHeader() {
     return this.page.locator("strong").filter({ hasText: /^Notifications$/ });
   }
+
+  // Calendar Elements
+  get calander() {
+    const page = this.page;
+
+    return {
+      get calendarIcon() {
+        return page.locator(".icon-calendar");
+      },
+
+      get calendarOverlay() {
+        return page.locator(".cdk-overlay-backdrop");
+      },
+
+      get nextMonthButton() {
+        return page.getByLabel('Next month');
+      },
+
+      get previousMonthButton() {
+        return page.getByLabel('Previous month');
+      },
+
+      get calendarDateTimeIcon() {
+        return page.locator(".calendar_icon");
+      },
+
+      get minusHourButton() {
+        return page.getByRole("button", { name: "Minus a hour" });
+      },
+      get addHourButton(){
+return page.getByRole('button', { name: 'Add a hour' })
+
+      },
+
+      get minusMinuteButton() {
+        return page.getByRole("button", { name: "Minus a minute" });
+      },
+
+      get addMinuteButton() {
+        return page.getByRole('button', { name: 'Add a minute' });
+      },
+
+      get setButton() {
+        return page.getByRole("button", { name: "Set" });
+      },
+
+      get cancelButton() {
+        return page.getByRole("button", { name: "Cancel" });
+      },
+ get clearButton(){
+return page.getByTitle('Clear');
+ } ,
+      get todayButton() {
+        return page.getByRole("button", { name: "today" });
+      },
+    };
+  }
   public async TotalLocationCount(): Promise<string> {
     const actualText = await this.totalLocationCount;
 
