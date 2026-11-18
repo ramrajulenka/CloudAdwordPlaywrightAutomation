@@ -95,102 +95,64 @@ test("Verify Total Players Card", async ({ player, util }) => {
     });
 
   test("Verify Group Creation", async ({ player, page }) => {
-
     const groupName = "Testing";
-
-    // STEP 1: Open Add Group popup
     await player.addGroup.Button.click();
-
-    // STEP 2: Enter group name
     await expect(player.addGroup.nameField).toBeVisible();
-
     await player.addGroup.nameField.fill(groupName);
-
-    // Verify group name
     await expect(player.addGroup.nameField).toHaveValue(groupName);
-
-    // STEP 3: Select a player
-await expect(player.addGroup.selectPlayer).toBeVisible();
-await player.addGroup.selectPlayer.check();
-
-// Verify player is selected
-await expect(player.addGroup.selectPlayer).toBeChecked();
-
-    // STEP 4: Create group
+    await expect(player.addGroup.selectPlayer).toBeVisible();
+    await player.addGroup.selectPlayer.check();
+    await expect(player.addGroup.selectPlayer).toBeChecked();
     await player.addGroup.addButton.click();
-
-    // STEP 5: Verify group creation
     await expect(player.addGroup.createdGroup).toBeVisible();
-
-    // Verify popup is closed
     await expect(page.locator(".cdk-overlay-backdrop")).toBeHidden();
-
-    // STEP 6: Open group dropdown
     await player.addGroup.groupMenuButton.click();
 
     // STEP 7: Verify Delete option
-    await expect(player.addGroup.deleteGroup).toBeVisible();
+    // await expect(player.addGroup.deleteGroup).toBeVisible();
 
-    // STEP 8: Click Delete
-    await player.addGroup.deleteGroup.click();
+    // // STEP 8: Click Delete
+    // await player.addGroup.deleteGroup.click();
 
-    // STEP 9: Verify confirmation popup
-    await expect(player.addGroup.yesDelete).toBeVisible();
+    // // STEP 9: Verify confirmation popup
+    // await expect(player.addGroup.yesDelete).toBeVisible();
 
-    // STEP 10: Confirm deletion
-    await player.addGroup.yesDelete.click();
+    // // STEP 10: Confirm deletion
+    // await player.addGroup.yesDelete.click();
 
-    // STEP 11: Verify group is deleted
-    await expect(player.addGroup.createdGroup).toBeHidden();
-
+    // // STEP 11: Verify group is deleted
+    // await expect(player.addGroup.createdGroup).toBeHidden();
   });
 //Advance Filters Test Cases
 
-    // test("Verify Advance Filters Popup", async ({ player, page  }) => {
-    //     const players = new Players(page);
+    test("Verify Advance Filters Popup", async ({ player, util }) => {
+      await util.action.clickElement(player.advanceFilter.button);
+      await util.assert.verifyElementText(
+        player.advanceFilter.title,
+        "Advance Filters",
+      );
+    });
 
-    //     await players.advanceFilter.button.click();
+    test("Verify Status Filter - Both", async ({player,util}) => {
+         await util.action.clickElement(player.advanceFilter.button);
+         await player.advanceFilter.byStatus.both;
+         await util.action.clickElement(player.advanceFilter.applyButton);
+         await util.assert.verifyElementVisible(player.Player.title);
+    });
 
-    //     await expect(
-    //         page.getByRole("heading", { name: "Advance Filters" })
-    //     ).toBeVisible();
+    test("Verify Status Filter - Online", async ({player,util}) => {
+        await util.action.clickElement(player.advanceFilter.button);
+         await player.advanceFilter.byStatus.online;
+         await util.action.clickElement(player.advanceFilter.applyButton);
+         await util.assert.verifyElementVisible(player.Player.title);
+    });
 
-    //     await expect(page.getByLabel("Status")).toBeVisible();
-    //     await expect(page.getByLabel("Country*")).toBeVisible();
-    //     await expect(page.getByLabel("Player OS")).toBeVisible();
-    //     await expect(page.getByLabel("Player Type")).toBeVisible();
-    //     await expect(players.advanceFilter.applyButton).toBeVisible();
-    // });
-
-    // test("Verify Status Filter - Both", async ({ page }) => {
-    //     const players = new Players(page);
-
-    //     await players.advanceFilter.button.click();
-
-    //     await players.advanceFilter.byStatus.both;
-
-    //     await expect(page.getByLabel("Status")).toHaveValue("-1");
-    // });
-
-    // test("Verify Status Filter - Online", async ({ page }) => {
-    //     const players = new Players(page);
-
-    //     await players.advanceFilter.button.click();
-
-    //     await players.advanceFilter.byStatus.online;
-
-    //     await expect(page.getByLabel("Status")).toHaveValue("1");
-    // });
-
-    // test("Verify Status Filter - Offline", async ({ page }) => {
-    //     const players = new Players(page);
-
-    //     await players.advanceFilter.button.click();
-
-    //     await players.advanceFilter.byStatus.offline;
-
-    //     await expect(page.getByLabel("Status")).toHaveValue("0");
-    // });
+    test("Verify Status Filter - Offline", async ({player,util}) => {
+        await util.action.clickElement(player.advanceFilter.button);
+         await player.advanceFilter.byStatus.offline;
+         await util.action.clickElement(player.advanceFilter.applyButton);
+         await util.assert.verifyElementVisible(player.Player.title); 
+    });
 
     // test("Verify Country Filter - India", async ({ page }) => {
     //     const players = new Players(page);

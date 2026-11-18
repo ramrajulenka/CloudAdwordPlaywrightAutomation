@@ -12,7 +12,4 @@ await util.action.clickElement(profile.updateButton);
 await util.assert.verifyElementText(profile.userDetailsUpdatedToast,'User details updated successfully')
 
 
-
-
-
 })

@@ -147,7 +147,7 @@ get deleteGroup() {
         return page.getByRole("link", { name: "Advance Filters" });
       },
       get title() {
-        return page.getByRole("textbox", { name: "Search Players" });
+        return page.getByText("Advance Filters", { exact: true });
       },
       get byStatus() {
         return {
