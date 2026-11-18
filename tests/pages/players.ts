@@ -7,6 +7,9 @@ export class Players {
     this.page = page;
   }
 
+get playerbutton(){
+  return  this.page.getByRole('link', { name: 'Players' })
+}
   // Players Page Locators
   get Player() {
     const page = this.page;
@@ -26,7 +29,7 @@ export class Players {
       },
 
       get totalPlayerCount() {
-        return page.locator("h4.number").nth(1);
+        return page.getByRole('heading', { name: '11' })
       },
 
       // Online Players
@@ -39,10 +42,7 @@ export class Players {
       },
 
       get onlinePlayerCount() {
-        return page
-          .locator("div.content")
-          .filter({ hasText: /^Online Players/ })
-          .locator("h4.number");
+        return page.getByRole('heading', { name: '0' });
       },
 
       // Offline Players
@@ -95,6 +95,13 @@ export class Players {
         return page.getByRole("textbox", { name: "Group Name" });
       },
 
+    get selectPlayer() {
+    return page
+        .getByRole("row", { name: /L Shape Device/ })
+        .getByRole("checkbox");
+
+
+      },
       get searchBar() {
         return page.getByRole("textbox", { name: "Search Players" });
       },
@@ -112,17 +119,20 @@ export class Players {
       },
 
       get createdGroup() {
-        return page.locator(
-          "li:nth-child(4) > .d-flex > .input-group > .input-group-append > .btn",
-        );
-      },
+    return page.locator("//li[@title='Testing']");
+},
 
-      get deleteGroup() {
-        return page.getByRole("link", { name: " Delete" });
-      },
+get groupMenuButton() {
+    return this.createdGroup.locator("button.grp_btn");
+},
 
+get deleteGroup() {
+    return page.locator(
+        "//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//a[normalize-space()='Delete']"
+    );
+},
       get yesDelete() {
-        return page.getByRole("button", { name: " Yes Delete" });
+        return page.locator('#confirmModal button[type="button"]', {hasText: 'Yes Delete'});
       },
     };
   }
