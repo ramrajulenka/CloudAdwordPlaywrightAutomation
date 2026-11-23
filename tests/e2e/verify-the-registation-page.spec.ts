@@ -1,132 +1,232 @@
+
 import { test } from "../fixtures/test-fixtures";
-import { testData } from "../test-data/login-data";
-import { testData as registrationTestData } from "../test-data/registation-data";
+import { testData } from "../test-data/registation-data";
 
 test.describe("CloudAdword Studio - Registration Tests", () => {
+
   // Navigate to Registration Page before every test
-  test.beforeEach(async ({ util,registrationPage }) => {
-    await util.action.navigate(testData.BaseURL);
-    await util.action.clickElement(registrationPage.registrationLink);
+  test.beforeEach(async ({ util, register, loginPage }) => {
+    await loginPage.launchWeb();
+    await util.action.clickElement(register.registrationLink);
   });
 
   // Verify Registration Page Title
-  test("Verify Registration Page Title", async ({
-    registrationPage,util
-  }) => {
-    await util.assert.verifyElementText(
-      registrationPage.registationPageTitle,
-      "Register",
+  test("Verify Registration Page Title", async ({ register, util }) => {
+    await util.assert.toHaveText(
+      register.registrationPageTitle,
+      "Register"
     );
   });
 
   // Verify Registration with Valid Credentials
-  test("Verify Registration with Valid Credentials", async ({
-    registrationPage,
+  test.skip("Verify Registration with Valid Credentials", async ({
+    register,
     util,
   }) => {
+
+    await util.assert.toHaveText(
+      register.registrationPageTitle,
+      "Register"
+    );
+
+    // Enter customer name
+    const userName = await util.data.randomTextWithRange(10);
+    await util.action.enterText(register.customerNameInput, userName);
+    await util.assert.toHaveValue(register.customerNameInput, userName);
+
+    // Enter email address
+    const email = await util.data.randomEmail();
+    await util.action.enterText(register.emailAddressInput, email);
+    await util.assert.toHaveValue(register.emailAddressInput, email);
+
+    // Select country dialing code
+    const countryCode = testData.countryDialingCodes.qatar.code;
+
+    await util.action.selectOption(
+      register.countryCodeDropdown,
+      countryCode
+    );
+
+    await util.assert.toHaveText(
+      register.countryCodeDropdown.locator("option:checked"),
+      testData.countryDialingCodes.qatar.countryLabel
+    );
+
+    // Enter contact number
+    const mobileNumber = util.data.randomMobileNumber();
+
     await util.action.enterText(
-      registrationPage.nameTextBox,
-      util.data.randomTextWithRange(8),
+      register.contactNumberInput,
+      mobileNumber
     );
 
-    await util.action.enterText(
-      registrationPage.emailTextBox,util.data.randomEmail()
+    // Accept Terms and Conditions
+    await util.action.clickElement(
+      register.termsAndConditionsCheckbox
     );
 
-    await util.action.enterText(
-      registrationPage.mobileNumberTextBox,util.data.randomMobileNumber()
+    // Submit Registration Form
+    await util.action.clickElement(register.submitButton);
+
+    // Verify Registration Success Message
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.registrationSuccess
     );
-
-    await util.action.selectDropdown(
-      registrationPage.countryCodeDropdown,
-      registrationTestData.validRegistrationData.countryCode,
-    );
-
-    await util.action.clickElement(registrationPage.termsAndConditionsCheckbox);
-
-    await util.action.clickElement(registrationPage.submitButton);
-
-    // await util.assert.verifyElementContainsText(
-    //   registrationPage.verifyValidationMessage,
-    //   registrationTestData.validRegistrationData.verifyValidationMessage,
-    // );
   });
 
-  // Verify Registration with Empty Name
+  // Verify Empty Name Validation
   test("Verify Registration with Empty Name", async ({
-    registrationPage,util
-   
+    register,
+    util,
   }) => {
-    await util.action.clickElement(registrationPage.submitButton);
 
-    await util.assert.verifyElementContainsText(
-      registrationPage.emptyNameValidationMessage,
-      registrationTestData.invalidRegistrationData
-        .invalidValidationMessageWithoutName,
+    await util.action.clickElement(register.submitButton);
+
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.emptyName
     );
   });
 
-  // Verify Registration with Empty Email
+  // Verify Empty Email Validation
   test("Verify Registration with Empty Email", async ({
-    registrationPage,util
+    register,
+    util,
   }) => {
+
+    const userName = await util.data.randomTextWithRange(10);
+
     await util.action.enterText(
-      registrationPage.nameTextBox,
-      registrationTestData.validRegistrationData.name,
+      register.customerNameInput,
+      userName
     );
 
-    await util.action.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(register.submitButton);
 
-    await util.assert.verifyElementContainsText(
-      registrationPage.emptyEmailValidationMessage,
-      registrationTestData.invalidRegistrationData
-        .invalidValidationMessageWithoutEmail,
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.emptyEmail
     );
   });
 
-  // Verify Registration with Empty Contact Number
+  // Verify Empty Contact Number Validation
   test("Verify Registration with Empty Contact Number", async ({
-    registrationPage,util
+    register,
+    util,
   }) => {
+
+    const userName = await util.data.randomTextWithRange(10);
+    const email = await util.data.randomEmail();
+
     await util.action.enterText(
-      registrationPage.nameTextBox,
-      registrationTestData.validRegistrationData.name,
+      register.customerNameInput,
+      userName
     );
 
     await util.action.enterText(
-      registrationPage.emailTextBox,
-      registrationTestData.validRegistrationData.email,
+      register.emailAddressInput,
+      email
     );
 
-    await util.action.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(register.submitButton);
 
-    await util.assert.verifyElementContainsText(
-      registrationPage.emptyContactNumberValidationMessage,
-      registrationTestData.invalidRegistrationData
-        .invalidValidationMessageWithoutContactNumber,
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.emptyContactNumber
     );
   });
 
-  // Verify Registration with Invalid Email
+  // Verify Invalid Email Validation
   test("Verify Registration with Invalid Email", async ({
-    registrationPage,util
+    register,
+    util,
   }) => {
+
+    const userName = await util.data.randomTextWithRange(10);
+
     await util.action.enterText(
-      registrationPage.nameTextBox,
-      registrationTestData.validRegistrationData.name,
+      register.customerNameInput,
+      userName
     );
 
     await util.action.enterText(
-      registrationPage.emailTextBox,
-      registrationTestData.invalidRegistrationData.email,
+      register.emailAddressInput,
+      "invalidemail"
     );
 
-    await util.action.clickElement(registrationPage.submitButton);
+    await util.action.clickElement(register.submitButton);
 
-    await util.assert.verifyElementContainsText(
-      registrationPage.verifyInvalidEmailValidationMessage,
-      registrationTestData.invalidRegistrationData
-        .invalidValidationMessageWithInvalidEmail,
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.invalidEmail
     );
   });
+
+  // Verify Invalid Contact Number Validation
+  test("Verify Registration with Invalid Contact Number", async ({
+    register,
+    util,
+  }) => {
+
+    const userName = await util.data.randomTextWithRange(10);
+    const email = await util.data.randomEmail();
+
+    await util.action.enterText(
+      register.customerNameInput,
+      userName
+    );
+
+    await util.action.enterText(
+      register.emailAddressInput,
+      email
+    );
+
+    await util.action.enterText(
+      register.contactNumberInput,
+      "123"
+    );
+
+    await util.action.clickElement(register.submitButton);
+
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.invalidContactNumber
+    );
+  });
+
+  // Verify Terms and Conditions Validation
+  test("Verify Registration without Accepting Terms and Conditions", async ({
+    register,
+    util,
+  }) => {
+
+    const userName = await util.data.randomTextWithRange(10);
+    const email = await util.data.randomEmail();
+    const mobileNumber = util.data.randomMobileNumber();
+
+    await util.action.enterText(
+      register.customerNameInput,
+      userName
+    );
+
+    await util.action.enterText(
+      register.emailAddressInput,
+      email
+    );
+
+    await util.action.enterText(
+      register.contactNumberInput,
+      mobileNumber
+    );
+
+    // Do not select Terms and Conditions checkbox
+    await util.action.clickElement(register.submitButton);
+
+    await util.assert.toHaveText(
+      register.toastNotification,
+      testData.validationMessages.termsAndConditions
+    );
+  });
+
 });

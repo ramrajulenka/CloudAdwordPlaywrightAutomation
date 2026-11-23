@@ -1,59 +1,59 @@
-import { Page, Locator } from '@playwright/test';
 
+import { Page } from "@playwright/test";
 
-export class RegistationPage{
+export class RegistrationPage {
     readonly page: Page;
 
     constructor(page: Page) {
         this.page = page;
     }
 
-get registrationLink(): Locator { 
-         return this.page.getByRole('link', { name: 'Register' });
-    }
-get registationPageTitle(): Locator {
-         return this.page.getByText('Register', { exact: true });
+    // Navigation
+    get registrationLink() {
+        return this.page.getByRole("link", { name: "Register" });
     }
 
-get nameTextBox(): Locator {
-         return this.page.getByRole('textbox', { name: 'Customer Name' });
+    get registrationPageTitle() {
+        return this.page.getByText("Register", { exact: true });
     }
-get emailTextBox(): Locator {
-         return this.page.getByRole('textbox', { name: 'Email' });
-    }    
 
-get countryCodeDropdown(): Locator {
-    return this.page.getByLabel('Country Code');
-}
+    // Registration Form Fields
+    get customerNameInput() {
+        return this.page.getByRole("textbox", { name: "Customer Name" });
+    }
 
-get mobileNumberTextBox(): Locator {
-    return this.page.getByRole('textbox', { name: 'Contact No' });
-}
+    get emailAddressInput() {
+        return this.page.getByRole("textbox", { name: "Email" });
+    }
 
-get termsAndConditionsCheckbox(): Locator {
-    return this.page.getByText('By clicking register you');
+    get countryCodeDropdown() {
+    return this.page.locator("//select[@id='signup-countrycode']");
 }
 
-get submitButton(): Locator {
-    return this.page.getByRole('button', { name: 'SUBMIT' }); 
-}
-get emptyNameValidationMessage(): Locator {
-    return this.page.getByText('×ErrorPlease enter name');
-}
-get emptyEmailValidationMessage(): Locator {
-    return this.page.getByText('×ErrorPlease enter email');
-}
-get emptyContactNumberValidationMessage(): Locator {
-    return this.page.getByText('×ErrorPlease enter contact no');    
-}
-get verifyValidationMessage(): Locator {
-    return this.page.getByText('xErrorRegistration successful');
-}
-get verifyInvalidEmailValidationMessage(): Locator {
-    return this.page.getByText('×ErrorPlease enter correct');
-}
-get verifyInvalidContactNumberValidationMessage(): Locator {
-    return this.page.getByText('×ErrorPlease enter correct');
-}
+    get contactNumberInput() {
+        return this.page.getByRole("textbox", { name: "Contact No" });
+    }
 
+    // Terms and Conditions
+    get termsAndConditionsCheckbox() {
+        return this.page.getByText("By clicking register you");
+    }
+
+    // Form Actions
+    get submitButton() {
+        return this.page.getByRole("button", { name: "SUBMIT" });
+    }
+
+// Toast Notifications
+get toastNotification() {
+    return this.page.locator("//div[@class='toast-message']");
+}
+get toastCloseButton() {
+    return (index: number) =>
+        this.page.locator("//button[normalize-space()='×']").nth(index);
+}
+    // Registration Status
+    get registrationSuccessMessage() {
+        return this.page.getByText("xErrorRegistration successful");
+    }
 }

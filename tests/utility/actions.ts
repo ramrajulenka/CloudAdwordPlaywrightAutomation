@@ -48,10 +48,12 @@ export class Actions {
   }
 
   // Select dropdown
-  async selectDropdown(locator: Locator, value: string) {
+  async selectOption(locator: Locator, value: string) {
     await locator.selectOption(value);
   }
-
+async getSelectedOptionText(locator: Locator): Promise<string> {
+    return await locator.locator("option:checked").innerText();
+}
   // Wait for element
   async waitForElement(locator: Locator) {
     await locator.waitFor({ state: "visible" });
@@ -62,10 +64,10 @@ export class Actions {
     await locator.hover();
   }
 
-  // Press keyboard key
-  async pressKey(locator: Locator, key: string) {
-    await locator.press(key);
-  }
+ //key = 'ArrowLeft', 'ArrowRight', 'Enter', 'Tab', 'Backspace', 'Control+A', 'Control+C', 'Control+V', 'Control+X', 'Control+Z', 'Control+Y'
+    async press(locator: Locator, key: string): Promise<void> {
+        await locator.press(key);
+    }
 
   // Take screenshot
   async takeScreenshot(name: string) {
@@ -81,4 +83,10 @@ export class Actions {
   async wait(seconds: number) {
     await this.page.waitForTimeout(seconds * 1000);
   }
+
+  //select dropdown 
+  async selectDropdownOption(locator: Locator, value: string) {
+    await locator.selectOption(value);
+}
+
 }

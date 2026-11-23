@@ -25,7 +25,7 @@ test.describe("Verify The Dashboard Functionality", () => {
 
   // Verify Dashboard Page Title
   test("Verify the Dashboard Page Title", async ({ dashboard, util }) => {
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.dashboardTitle,
       dashboardData.title
     );
@@ -33,7 +33,7 @@ test.describe("Verify The Dashboard Functionality", () => {
 
   // Verify Cloud ID
   test("Verify The Cloud ID On The Dashboard", async ({ dashboard, util }) => {
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.getCloudIDText(dashboardData.CloudID),
       `Cloud ID : ${dashboardData.CloudID}`
     );
@@ -41,7 +41,7 @@ test.describe("Verify The Dashboard Functionality", () => {
 
   // Verify Client Name
   test("Verify the Client Name on the Dashboard Page", async ({ dashboard, util }) => {
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.getDashboardClientName(dashboardData.clientName),
       `Hi, ${dashboardData.clientName}.`
     );
@@ -53,7 +53,7 @@ test.describe("Verify The Dashboard Functionality", () => {
 
   // Verify Location Text
   test("Verify the Location Text", async ({ dashboard, util }) => {
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.locationsText,
       dashboardData.locationText
     );
@@ -66,14 +66,14 @@ test.describe("Verify The Dashboard Functionality", () => {
 
   // Verify Location Count
   test("Verify the Location Count", async ({ dashboard, util }) => {
-    await util.assert.verifyTextCount(
+    await util.assert.toBeTextCount(
       await dashboard.TotalLocationCount(),
       16
     );
   });
 //Verify The Map
 test("Verify The Dashboard Map",async({dashboard,util})=>{
-  await util.assert.verifyElementVisible(dashboard.map);
+  await util.assert.toBeVisible(dashboard.map);
 
 
 });
@@ -83,7 +83,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
   // Verify Total Screens Count
   test("Verify The Total Screens Count", async ({ dashboard, util }) => {
-    await util.assert.verifyTextCount(
+    await util.assert.toBeTextCount(
       await dashboard.TotalScreensCount(),
       11
     );
@@ -95,7 +95,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
     console.log("Online Screens Count:", onlineCount);
 
-    await util.assert.verifyTextCount(onlineCount, 0);
+    await util.assert.toBeTextCount(onlineCount, 0);
   });
 
   // =====================================================
@@ -104,10 +104,10 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
   // Verify Add Screen Button
   test("Verify The Add Screen Button", async ({ dashboard, util }) => {
-    await util.assert.verifyElementVisible(dashboard.addPlayerButton);
+    await util.assert.toBeVisible(dashboard.addPlayerButton);
     await util.action.clickElement(dashboard.addPlayerButton);
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.addPlayerPageText,
       "Add Player"
     );
@@ -115,10 +115,10 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
   // Verify Add Campaign Page Text
   test("Verify The Add Campaign Page Text", async ({ dashboard, util }) => {
-    await util.assert.verifyElementVisible(dashboard.addCampaignButton);
+    await util.assert.toBeVisible(dashboard.addCampaignButton);
     await util.action.clickElement(dashboard.addCampaignButton);
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.addCampaignPageText,
       "Create Campaign"
     );
@@ -130,10 +130,10 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
   // Verify Notification Button Functionality
   test("Verify the Notification Button Functionality", async ({ dashboard, util }) => {
-    await util.assert.verifyElementVisible(dashboard.notificationIcon);
+    await util.assert.toBeVisible(dashboard.notificationIcon);
     await util.action.clickElement(dashboard.notificationIcon);
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.notificationPopupHeader,
       "Notifications"
     );
@@ -145,7 +145,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
 
   // Verify Calendar Icon Visibility
   test("Verify Calendar Icon Visibility", async ({ dashboard, util }) => {
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.calendarIcon
     );
   });
@@ -163,7 +163,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.calendarOverlay
     );
   });
@@ -174,7 +174,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.nextMonthButton
     );
 
@@ -189,7 +189,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.previousMonthButton
     );
 
@@ -204,7 +204,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.calendarDateTimeIcon
     );
   });
@@ -215,7 +215,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.minusHourButton
     );
 
@@ -230,7 +230,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.minusMinuteButton
     );
 
@@ -245,7 +245,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.addHourButton
     );
 
@@ -260,7 +260,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.addMinuteButton
     );
 
@@ -275,7 +275,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.setButton
     );
 
@@ -290,7 +290,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.calendarIcon
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.cancelButton
     );
 
@@ -309,7 +309,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.calander.setButton
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.calander.clearButton
     );
 
@@ -328,7 +328,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.scheduleCalendar.nextMonthButton
     );
 
-    await util.assert.verifyElementVisible(
+    await util.assert.toBeVisible(
       dashboard.scheduleCalendar.todayButton
     );
 
@@ -336,7 +336,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.scheduleCalendar.todayButton
     );
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.scheduleCalendar.getVerifyMonthText("November"),
       "November 2026"
     );
@@ -348,7 +348,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.scheduleCalendar.nextMonthButton
     );
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.scheduleCalendar.getVerifyMonthText("December"),
       "December 2026"
     );
@@ -360,7 +360,7 @@ test("Verify The Dashboard Map",async({dashboard,util})=>{
       dashboard.scheduleCalendar.previousMonthButton
     );
 
-    await util.assert.verifyElementText(
+    await util.assert.toHaveText(
       dashboard.scheduleCalendar.getVerifyMonthText("October"),
       "October 2026"
     );

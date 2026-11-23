@@ -14,21 +14,21 @@ test.describe("Verify Players Page Functionality", () => {
     })
 
     test("Verify Players Page Title", async ({player,util }) => {
-    await util.assert.verifyElementText(player.Player.title,'Players')
+    await util.assert. toHaveText(player.Player.title,'Players')
        
     });
 
 test("Verify Total Players Card", async ({ player, util }) => {
-  await util.assert.verifyElementText(
+  await util.assert. toHaveText(
     player.Player.totalplayersText,
     "Total Players",
   );
-  await util.assert.verifyElementVisible(player.Player.onlinePlayerIcon);
+  await util.assert.toBeVisible(player.Player.onlinePlayerIcon);
   const totalPlayerCount = await util.action.InnerText(
     player.Player.totalPlayerCount,
   );
   console.log(totalPlayerCount);
-  await util.assert.verifyElementText(
+  await util.assert. toHaveText(
     player.Player.totalPlayerCount,
     totalPlayerCount,
   );
@@ -37,61 +37,67 @@ test("Verify Total Players Card", async ({ player, util }) => {
     test("Verify Online Players Card", async ({player,util}) => {
 
         const onlinePlayerCardTitle=await util.action.InnerText(player.Player.onlinePlayerText)
-       await util.assert.verifyElementVisible(player.Player.onlinePlayerIcon);
-       await util.assert.verifyElementText(player.Player.onlinePlayerText,'Online Players');
+       await util.assert.toBeVisible(player.Player.onlinePlayerIcon);
+       await util.assert. toHaveText(player.Player.onlinePlayerText,'Online Players');
        const onlinePlayerCount=await util.action.InnerText(player.Player.onlinePlayerCount);
        console.log('Count',onlinePlayerCount);
-       await util.assert.verifyElementText(player.Player.onlinePlayerCount,onlinePlayerCount);
+       await util.assert. toHaveText(player.Player.onlinePlayerCount,onlinePlayerCount);
        
     });
 
     test("Verify Offline Players Card", async ({player,util }) => {
-      await util.assert.verifyElementText(player.Player.offlinePlayerText,'Offline Players');
-      await util.assert.verifyElementVisible(player.Player.offlinePlayersIcon);
+      await util.assert. toHaveText(player.Player.offlinePlayerText,'Offline Players');
+      await util.assert.toBeVisible(player.Player.offlinePlayersIcon);
       const offlinePlayerCount=await util.action.InnerText(player.Player.OfflinePlayerCount);
       console.log(offlinePlayerCount);
-      await util.assert.verifyElementText(player.Player.OfflinePlayerCount,offlinePlayerCount);
+      await util.assert. toHaveText(player.Player.OfflinePlayerCount,offlinePlayerCount);
 
 
     });
 
     test("Verify Preset Tagged Card", async ({player,util }) => {
        
-        await util.assert.verifyElementText(player.Player.presetTagText,'Preset Tagged')
-        await util.assert.verifyElementVisible(player.Player.presetTagIcon);
+        await util.assert. toHaveText(player.Player.presetTagText,'Preset Tagged')
+        await util.assert.toBeVisible(player.Player.presetTagIcon);
         const presetTagCount=await util.action.InnerText(player.Player.presetTagCount);
         console.log(presetTagCount)
-        await util.assert.verifyElementText(player.Player.presetTagCount,presetTagCount);
+        await util.assert. toHaveText(player.Player.presetTagCount,presetTagCount);
     });
 
     test("Verify Search Players Functionality", async ({player,util }) => {
         await util.action.enterText(player.Player.searchPlayer,'L-Shape');
-       // await util.assert.verifyElementVisible(player.Player.searchPlayer)
+       // await util.assert.toBeVisible(player.Player.searchPlayer)
     });
 
     // Add Group Test Cases
     test("Verify Add Group Button", async ({ player, util }) => {
       await util.action.clickElement(player.addGroup.Button);
-      await util.assert.verifyElementVisible(player.addGroup.PageText);
-      await util.assert.verifyElementText(player.addGroup.PageText, "Group");
-      await util.assert.verifyElementVisible(player.addGroup.nameField);
-      await util.assert.verifyElementVisible(player.addGroup.searchBar);
-      await util.assert.verifyElementVisible(player.addGroup.xButton);
-      await util.assert.verifyElementVisible(player.addGroup.closeButton);
-      await util.assert.verifyElementVisible(player.addGroup.addButton);
+      await util.assert.toBeVisible(player.addGroup.PageText);
+      await util.assert. toHaveText(player.addGroup.PageText, "Group");
+      await util.assert.toBeVisible(player.addGroup.nameField);
+      await util.assert.toBeVisible(player.addGroup.searchBar);
+      await util.assert.toBeVisible(player.addGroup.xButton);
+      await util.assert.toBeVisible(player.addGroup.closeButton);
+      await util.assert.toBeVisible(player.addGroup.addButton);
     });
 
-    test("Verify Close Group Popup Using X Button", async ({player, util }) => {
-        await util.action.clickElement(player.addGroup.Button);
-       await util.action.clickElement(player.addGroup.xButton);
-       await util.assert.verifyElementText(player.Player.title,'Players');
+    test("Verify Close Group Popup Using X Button", async ({
+      player,
+      util,
+    }) => {
+      await util.action.clickElement(player.addGroup.Button);
+      await util.action.clickElement(player.addGroup.xButton);
+      await util.assert. toHaveText(player.Player.title, "Players");
     });
 
-    test("Verify Close Group Popup Using Close Button", async ({player, util}) => {
-         await util.action.clickElement(player.addGroup.Button);
-         await util.assert.verifyElementVisible(player.addGroup.closeButton);
-         await util.action.clickElement(player.addGroup.closeButton);
-         await util.assert.verifyElementText(player.Player.title,'Players');
+    test("Verify Close Group Popup Using Close Button", async ({
+      player,
+      util,
+    }) => {
+      await util.action.clickElement(player.addGroup.Button);
+      await util.assert.toBeVisible(player.addGroup.closeButton);
+      await util.action.clickElement(player.addGroup.closeButton);
+      await util.assert. toHaveText(player.Player.title, "Players");
     });
 
   test("Verify Group Creation", async ({ player, page }) => {
@@ -127,7 +133,7 @@ test("Verify Total Players Card", async ({ player, util }) => {
 
     test("Verify Advance Filters Popup", async ({ player, util }) => {
       await util.action.clickElement(player.advanceFilter.button);
-      await util.assert.verifyElementText(
+      await util.assert. toHaveText(
         player.advanceFilter.title,
         "Advance Filters",
       );
@@ -137,52 +143,54 @@ test("Verify Total Players Card", async ({ player, util }) => {
          await util.action.clickElement(player.advanceFilter.button);
          await player.advanceFilter.byStatus.both;
          await util.action.clickElement(player.advanceFilter.applyButton);
-         await util.assert.verifyElementVisible(player.Player.title);
+         await util.assert.toBeVisible(player.Player.title);
     });
 
     test("Verify Status Filter - Online", async ({player,util}) => {
         await util.action.clickElement(player.advanceFilter.button);
          await player.advanceFilter.byStatus.online;
          await util.action.clickElement(player.advanceFilter.applyButton);
-         await util.assert.verifyElementVisible(player.Player.title);
+         await util.assert.toBeVisible(player.Player.title);
     });
 
     test("Verify Status Filter - Offline", async ({player,util}) => {
         await util.action.clickElement(player.advanceFilter.button);
          await player.advanceFilter.byStatus.offline;
          await util.action.clickElement(player.advanceFilter.applyButton);
-         await util.assert.verifyElementVisible(player.Player.title); 
+         await util.assert.toBeVisible(player.Player.title); 
     });
 
-    // test("Verify Country Filter - India", async ({ page }) => {
-    //     const players = new Players(page);
+    test("Verify Country Filter - India", async ({ player, util, page }) => {
+      await util.action.clickElement(player.advanceFilter.button);
+      // Select India
+      await util.action.selectDropdownOption(
+        page.getByLabel("Country*"),
+        "101",
+      );
 
-    //     await players.advanceFilter.button.click();
+      // Verify selected country
+      await util.assert.toHaveValue(page.getByLabel("Country*"), "101");
+      await util.assert.toContainText(player.advanceFilter.countryDropdown,'India')
+      await util.action.clickElement(player.advanceFilter.applyButton);
+      await util.assert.toBeVisible(player.Player.title);
+    });
 
-    //     await players.advanceFilter.byCountryIndia;
+    test("Verify Player OS Filter - Android", async ({ player, util,page }) => {
+       await util.action.clickElement(player.advanceFilter.button);
+       await util.action.selectDropdownOption(page.getByLabel("Player OS"),"Android");   
+       await util.assert.toHaveValue(page.getByLabel("Player OS"), "Android");
+       await util.action.clickElement(player.advanceFilter.applyButton);
+       await util.assert.toBeVisible(player.Player.title);
+    });
 
-    //     await expect(page.getByLabel("Country*")).toHaveValue("101");
-    // });
-
-    // test("Verify Player OS Filter - Android", async ({ page }) => {
-    //     const players = new Players(page);
-
-    //     await players.advanceFilter.button.click();
-
-    //     await players.advanceFilter.byOs;
-
-    //     await expect(page.getByLabel("Player OS")).toHaveValue("Android");
-    // });
-
-    // test("Verify Player Type Filter - Horizontal", async ({ page }) => {
-    //     const players = new Players(page);
-
-    //     await players.advanceFilter.button.click();
-
-    //     await players.advanceFilter.getbyPlayerType("Horizontal");
-
-    //     await expect(page.getByLabel("Player Type")).toHaveValue("Horizontal");
-    // });
+    test("Verify Player Type Filter - Horizontal", async ({player, util,page }) => {
+        
+        await util.action.clickElement(player.advanceFilter.button);
+        await player.advanceFilter.getbyPlayerType("Horizontal");
+        await expect(page.getByLabel("Player Type")).toHaveValue("Horizontal");
+        await util.action.clickElement(player.advanceFilter.applyButton);
+       await util.assert.toBeVisible(player.Player.title);
+    });
 
     // test("Verify Player Type Filter - Vertical", async ({ page }) => {
     //     const players = new Players(page);

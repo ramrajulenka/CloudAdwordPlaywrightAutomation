@@ -24,11 +24,9 @@ export class Profile {
     return this.page.getByRole("textbox", { name: "City" });
   }
 
-  get updateButton() {
-    return this.page.locator(
-      "(//button[@type='button'][normalize-space()='Update'])[1]",
-    );
-  }
+  getUpdateButton(index: number) {
+    return this.page.locator('button').filter({ hasText: 'Update' }).nth(index);
+}
   get userDetailsUpdatedToast() {
     return this.page.getByText("User details updated");
   }

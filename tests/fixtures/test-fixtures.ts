@@ -1,7 +1,7 @@
 import { test as base, expect } from "@playwright/test";
 import { LoginPage } from "../pages/login-page";
 import { Actions } from "../utility/actions";
-import { RegistationPage } from "../pages/registation-page";
+import { RegistrationPage} from "../pages/registation-page";
 import { Assertions } from "../utility/assertions";
 import { Dashboard} from "../pages/dashboard";
 import { AddCampaignPage } from "../pages/add-campaign";
@@ -14,7 +14,7 @@ import { Profile } from "../pages/profile";
 interface MyFixtures {
   loginPage: LoginPage;
   action: Actions;
-  registrationPage: RegistationPage;
+  register: RegistrationPage;
   assert: Assertions;
   dashboard: Dashboard;
   addCampaign: AddCampaignPage;
@@ -38,8 +38,8 @@ export const test = base.extend<MyFixtures>({
   },
 
   //Extend RegistrationPage fixture
-  registrationPage: async ({ page }, use) => {
-    const registrationPage = new RegistationPage(page);
+  register: async ({ page }, use) => {
+    const registrationPage = new RegistrationPage(page);
     await use(registrationPage);
   },
 

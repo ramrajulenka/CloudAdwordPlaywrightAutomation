@@ -162,11 +162,11 @@ get deleteGroup() {
           },
         };
       },
-      get byCountryIndia() {
-        return page.getByLabel("Country*").selectOption("101");
-      },
+      get countryDropdown() {
+    return page.getByLabel("Country*");
+},
       get byOs() {
-        return page.getByLabel("Player OS").selectOption("Android");
+        return page.getByLabel("Player OS");
       },
       getbyPlayerType(layout: string) {
         return page.getByLabel("Player Type").selectOption(`${layout}`);
