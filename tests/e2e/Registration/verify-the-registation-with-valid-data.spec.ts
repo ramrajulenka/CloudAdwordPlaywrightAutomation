@@ -1,5 +1,3 @@
-
-
 import { test } from "../../fixtures/test-fixtures";
 import { testData } from "../../test-data/registation-data";
 
@@ -67,6 +65,7 @@ test("Verify The Registration Functionality with valid data", async ({
 
   // Verify successful registration
   //await page.pause();
+  await page.waitForTimeout(5000);
   await util.assert.toBeVisible(register.registrationSuccessMessage);
   await util.assert.toHaveText(
     register.registrationSuccessMessage,

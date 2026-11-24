@@ -3,7 +3,7 @@ export const testData = {
     BaseURL: "https://app.v2.cloudadword.com",
     testAccountOne: {
         username: "iamkira134@gmail.com",
-        password: "Ramaraju@134",
+        password: "Ramaraju@133",
         otp: "123456",
         cloudID: "56036D19",
     },

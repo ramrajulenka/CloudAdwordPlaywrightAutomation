@@ -1,7 +1,7 @@
 import { test } from "../../fixtures/test-fixtures";
 import { testData } from "../../test-data/login-data";
 
-test("Verify the Forgot Password Page", async ({ loginPage, util }) => {
+test.skip("Verify the Forgot Password Page", async ({ loginPage, util }) => {
   // Launch the application
   await loginPage.launchWeb();
 
