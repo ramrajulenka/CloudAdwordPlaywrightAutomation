@@ -30,6 +30,7 @@ export const test = base.extend<MyFixtures>({
     const loginPage = new LoginPage(page);
     await use(loginPage);
   },
+  
 
   // Extend Actions fixture
   action: async ({ page }, use) => {

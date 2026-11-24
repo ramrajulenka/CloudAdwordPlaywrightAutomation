@@ -8,7 +8,9 @@ export class LoginPage {
     constructor(page: Page) {
         this.page = page;
     }
-
+   get logo(){
+    return this.page.locator("//div[@class='top']//img[@alt='CloudAdword']");
+   }
     get loginPageTitle() {
         return this.page.getByRole('heading', { name: 'Login to your account' });
     }
@@ -32,10 +34,12 @@ export class LoginPage {
     get loginButton() {
         return this.page.getByRole('button', { name: 'LOGIN' });
     }
-    get verifyInvalidCredentialsErrorMessage() {
-        return this.page.getByText('×Error');
+    get toastNotification() {
+        return this.page.locator("//div[@class='toast-message']");
     }
-
+    get toastNotificationTitle() {
+        return this.page.locator("//div[@class='toast-title']");
+    }
     get otpInput() {
         return this.page.getByRole('textbox', { name: 'OTP' });
     }
@@ -49,6 +53,39 @@ export class LoginPage {
         return this.page.locator('#main-content').getByText('Dashboard');
 
     }
+
+   // Forgot Password Page
+  get forgotPassword() {
+    const page = this.page;
+
+    return {
+      // Forgot Password link
+      get button() {
+        return page.getByRole("link", { name: "Forgot password?" });
+      },
+
+      // Forgot Password page title
+      get title() {
+        return page.getByRole("heading", { name: "Forgot Password" });
+      },
+
+      // Email input field
+      get emailInput() {
+        return page.getByRole("textbox", { name: "Email" });
+      },
+
+      // Send Email button
+      get sendEmailButton() {
+        return page.getByRole("button", { name: "Send Email" });
+      },
+      get loginButton(){
+        return page.getByRole('link', { name: 'Login' });
+      }
+    };
+  }
+
+
+
  public async launchWeb(){
 await this.page.goto(testData.BaseURL);
 

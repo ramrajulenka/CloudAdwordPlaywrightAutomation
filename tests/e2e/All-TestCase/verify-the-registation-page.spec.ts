@@ -1,6 +1,6 @@
 
-import { test } from "../fixtures/test-fixtures";
-import { testData } from "../test-data/registation-data";
+import { test } from "../../fixtures/test-fixtures";
+import { testData } from "../../test-data/registation-data";
 
 test.describe("CloudAdword Studio - Registration Tests", () => {
 

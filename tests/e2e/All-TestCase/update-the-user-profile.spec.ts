@@ -1,5 +1,5 @@
 import { profile } from 'node:console'
-import{test} from '../fixtures/test-fixtures'
+import{test} from '../../fixtures/test-fixtures'
 
 test("Update The Profile",async({profile,util,loginPage})=>{
 await loginPage.launchWeb();

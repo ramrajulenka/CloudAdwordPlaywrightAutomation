@@ -1,4 +1,4 @@
-import{test} from '../fixtures/test-fixtures'
+import{test} from '../../fixtures/test-fixtures'
 
 
 test("Verify The Add Campaign Funtionality",async({addCampaign,loginPage,util})=>{

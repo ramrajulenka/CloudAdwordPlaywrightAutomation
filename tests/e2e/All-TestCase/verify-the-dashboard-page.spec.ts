@@ -1,7 +1,7 @@
 
 import { assert } from "node:console";
-import { test } from "../fixtures/test-fixtures";
-import { dashboardData } from "../test-data/deshboard-data";
+import{test} from '../../fixtures/test-fixtures'
+import { dashboardData } from "../../test-data/deshboard-data";
 
 test.describe("Verify The Dashboard Functionality", () => {
 

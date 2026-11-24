@@ -1,8 +1,7 @@
-
 import { expect } from "@playwright/test";
-import { test } from "../fixtures/test-fixtures";
-import { Players } from "../pages/players";
-import { time } from "node:console";
+
+import { test } from "../../fixtures/test-fixtures";
+
 
 test.describe("Verify Players Page Functionality", () => {
 

@@ -10,7 +10,7 @@ export const testData = {
         invalidEmail: "Please enter correct email",
         invalidContactNumber: "Please enter correct contact no",
          termsAndConditions: "Please accept terms and conditions",
-        registrationSuccess: "Registration successful"
+        registrationSuccess: "Thank You for Registering with Cloud Adword."
     },
 
     // Country Dialing Code Data

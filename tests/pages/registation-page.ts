@@ -54,6 +54,6 @@ get toastCloseButton() {
 }
     // Registration Status
     get registrationSuccessMessage() {
-        return this.page.getByText("xErrorRegistration successful");
+        return this.page.getByRole('heading', { name: 'Thank You for Registering with Cloud Adword.' });
     }
 }
